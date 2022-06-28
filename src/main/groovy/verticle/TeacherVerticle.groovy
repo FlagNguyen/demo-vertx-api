@@ -1,5 +1,6 @@
 package verticle
 
+import com.fasterxml.jackson.databind.ObjectMapper
 import entity.Teacher
 import groovy.util.logging.Slf4j
 import io.vertx.core.AbstractVerticle
@@ -15,6 +16,8 @@ import java.util.stream.Collectors
 
 @Slf4j
 class TeacherVerticle extends AbstractVerticle {
+
+    ObjectMapper objectMapper = new ObjectMapper()
 
     /**
      * Map contain:
@@ -60,7 +63,7 @@ class TeacherVerticle extends AbstractVerticle {
     private void getAllTeachers(RoutingContext routingContext) {
         HttpServerResponse response = routingContext.response()
         response.putHeader("content-type", "application/json;charset=UTF-8")
-        response.end(Json.encodePrettily(teachersByID.values()))
+        response.end(objectMapper.writeValueAsString(teachersByID.values()))
         log.debug("Get all teachers successfully")
     }
 
@@ -84,7 +87,7 @@ class TeacherVerticle extends AbstractVerticle {
                     log.debug("Can't found this teacher")
                     return
                 }
-                routingContext.response().setStatusCode(200).end(Json.encodePrettily(foundTeacher))
+                routingContext.response().setStatusCode(200).end(objectMapper.writeValueAsString(foundTeacher))
             } catch (e) {
                 e.printStackTrace()
                 routingContext.response().setStatusCode(400).end()
@@ -121,7 +124,7 @@ class TeacherVerticle extends AbstractVerticle {
                 return
             }
             teachersByID.put(newTeacher.teacherID, newTeacher)
-            routingContext.response().setStatusCode(200).end(Json.encodePrettily(newTeacher))
+            routingContext.response().setStatusCode(200).end(objectMapper.writeValueAsString(newTeacher))
             log.debug("Add new successfully $newTeacher")
         } catch (e) {
             log.error("Error when add teacher: $e")
@@ -179,7 +182,7 @@ class TeacherVerticle extends AbstractVerticle {
 
             teachersByID.replace(updateTeacher.teacherID, updateTeacher)
             log.debug("Update successfully $updateTeacher")
-            routingContext.response().setStatusCode(200).end(Json.encodePrettily(updateTeacher))
+            routingContext.response().setStatusCode(200).end(objectMapper.writeValueAsString(updateTeacher))
         } catch (e) {
             log.error("Error when update teacher: $e")
             response.end("Delete failure. Error: " + e)

@@ -1,5 +1,4 @@
 import io.vertx.core.Vertx
-import verticle.SubjectVerticle
 import verticle.TeacherVerticle
 
 class Main {
