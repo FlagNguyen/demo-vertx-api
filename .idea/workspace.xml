@@ -5,8 +5,6 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="3b900838-9aca-4f2d-a6f9-5c21b503052e" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/build.gradle" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/groovy/verticle/TeacherVerticle.groovy" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/groovy/verticle/TeacherVerticle.groovy" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -212,7 +210,7 @@
       <workItem from="1656325871064" duration="995000" />
       <workItem from="1656326935573" duration="2430000" />
       <workItem from="1656382454271" duration="6338000" />
-      <workItem from="1656388994372" duration="2538000" />
+      <workItem from="1656388994372" duration="2968000" />
     </task>
     <servers />
   </component>

@@ -61,6 +61,7 @@ class TeacherVerticle extends AbstractVerticle {
         HttpServerResponse response = routingContext.response()
         response.putHeader("content-type", "application/json;charset=UTF-8")
         response.end(Json.encodePrettily(teachersByID.values()))
+        log.debug("Get all teachers successfully")
     }
 
     /**
@@ -80,6 +81,7 @@ class TeacherVerticle extends AbstractVerticle {
                 Teacher foundTeacher = teachersByID.get(teacherIdParam)
                 if (foundTeacher == null) {
                     routingContext.response().setStatusCode(400).end("Can't found this teacher")
+                    log.debug("Can't found this teacher")
                     return
                 }
                 routingContext.response().setStatusCode(200).end(Json.encodePrettily(foundTeacher))
@@ -110,16 +112,19 @@ class TeacherVerticle extends AbstractVerticle {
             List errorMessages = validateTeacherRequestAndReturnMessage(newTeacher)
             if (errorMessages.contains("DuplicateID")) {
                 response.end("This id is existed")
+                log.debug("This id is existed")
                 return
             }
             if (errorMessages.contains("WrongFormatEmail")) {
-                response.end("Wrong format email")
+                response.end("Wrong email format")
+                log.debug("Wrong email format")
                 return
             }
             teachersByID.put(newTeacher.teacherID, newTeacher)
-            println "Add new successfully $newTeacher"
             routingContext.response().setStatusCode(200).end(Json.encodePrettily(newTeacher))
+            log.debug("Add new successfully $newTeacher")
         } catch (e) {
+            log.error("Error when add teacher: $e")
             response.end(e.getMessage())
         }
     }
@@ -163,18 +168,20 @@ class TeacherVerticle extends AbstractVerticle {
             Teacher foundTeacher = teachersByID.get(updateTeacher.teacherID)
             if (foundTeacher == null) {
                 response.end("This id doesn't existed")
+                log.debug("This id doesn't existed")
                 return
             }
             if (!EmailValidator.getInstance().isValid(updateTeacher.email)) {
-                response.end("Wrong email format ")
+                response.end("Wrong email format")
+                log.debug("Wrong email format")
                 return
             }
 
             teachersByID.replace(updateTeacher.teacherID, updateTeacher)
-            println "Update successfully $updateTeacher"
+            log.debug("Update successfully $updateTeacher")
             routingContext.response().setStatusCode(200).end(Json.encodePrettily(updateTeacher))
         } catch (e) {
-            e.printStackTrace()
+            log.error("Error when update teacher: $e")
             response.end("Delete failure. Error: " + e)
         }
     }
@@ -193,12 +200,14 @@ class TeacherVerticle extends AbstractVerticle {
 
             if (teachersByID.get(teacherIdParam).equals(null)) {
                 response.end("This id doesn't existed")
+                log.debug("This id doesn't existed")
                 return
             }
             teachersByID.remove(teacherIdParam)
             response.end("Delete successfully teacher's id: " + teacherIdParam)
+            log.debug("Delete successfully teacher's id: " + teacherIdParam)
         } catch (e) {
-            System.err.println("Error: " + e)
+            log.error("Error when deleting teacher: $e")
             response.end("Delete failure. Error: " + e)
         }
 
