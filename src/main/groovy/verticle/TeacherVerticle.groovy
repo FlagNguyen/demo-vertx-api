@@ -11,7 +11,7 @@ import io.vertx.ext.web.Router
 import io.vertx.ext.web.RoutingContext
 import io.vertx.ext.web.handler.BodyHandler
 import org.apache.commons.validator.routines.EmailValidator
-
+import entity.Error
 import java.util.stream.Collectors
 
 @Slf4j
@@ -77,23 +77,23 @@ class TeacherVerticle extends AbstractVerticle {
         response.putHeader("content-type", "application/json;charset=UTF-8")
 
         String teacherIdParam = routingContext.request().getParam("id")
-        if (teacherIdParam == null) {
-            routingContext.response().setStatusCode(400).end()
-        } else {
-            try {
-                Teacher foundTeacher = teachersByID.get(teacherIdParam)
-                if (foundTeacher == null) {
-                    routingContext.response().setStatusCode(400).end("Can't found this teacher")
-                    log.debug("Can't found this teacher")
-                    return
-                }
-                routingContext.response().setStatusCode(200).end(objectMapper.writeValueAsString(foundTeacher))
-            } catch (e) {
-                e.printStackTrace()
-                routingContext.response().setStatusCode(400).end()
+        try {
+            Teacher foundTeacher = teachersByID.get(teacherIdParam)
+            if (foundTeacher == null) {
+                routingContext.response()
+                        .setStatusCode(400)
+                        .end(objectMapper
+                                .writeValueAsString(new Error("001", "Can't found this id")))
+                log.debug("Can't found this teacher")
+                return
             }
+            routingContext.response().setStatusCode(200).end(objectMapper.writeValueAsString(foundTeacher))
+        } catch (e) {
+            e.printStackTrace()
+            routingContext.response().setStatusCode(400).end()
         }
     }
+
 
     /**
      * Method add new teacher by input Json
@@ -114,12 +114,14 @@ class TeacherVerticle extends AbstractVerticle {
 
             List errorMessages = validateTeacherRequestAndReturnMessage(newTeacher)
             if (errorMessages.contains("DuplicateID")) {
-                response.end("This id is existed")
+                response.end(objectMapper.
+                        writeValueAsString(new Error("003", "This id is existed")))
                 log.debug("This id is existed")
                 return
             }
             if (errorMessages.contains("WrongFormatEmail")) {
-                response.end("Wrong email format")
+                response.end(objectMapper.
+                        writeValueAsString(new Error("002", "Wrong email format")))
                 log.debug("Wrong email format")
                 return
             }
@@ -170,12 +172,14 @@ class TeacherVerticle extends AbstractVerticle {
 
             Teacher foundTeacher = teachersByID.get(updateTeacher.teacherID)
             if (foundTeacher == null) {
-                response.end("This id doesn't existed")
+                response.end(objectMapper
+                        .writeValueAsString(new Error("001", "Can't found this id")))
                 log.debug("This id doesn't existed")
                 return
             }
             if (!EmailValidator.getInstance().isValid(updateTeacher.email)) {
-                response.end("Wrong email format")
+                response.end(objectMapper.
+                        writeValueAsString(new Error("002", "Wrong email format")))
                 log.debug("Wrong email format")
                 return
             }
@@ -202,17 +206,19 @@ class TeacherVerticle extends AbstractVerticle {
             String teacherIdParam = routingContext.request().getParam("id")
 
             if (teachersByID.get(teacherIdParam).equals(null)) {
-                response.end("This id doesn't existed")
+                routingContext.response()
+                        .setStatusCode(400)
+                        .end(objectMapper
+                                .writeValueAsString(new Error("001", "Can't found this id")))
                 log.debug("This id doesn't existed")
                 return
             }
             teachersByID.remove(teacherIdParam)
-            response.end("Delete successfully teacher's id: " + teacherIdParam)
+            response.end("Delete successfully teacher's id: " + teachersByID)
             log.debug("Delete successfully teacher's id: " + teacherIdParam)
         } catch (e) {
             log.error("Error when deleting teacher: $e")
             response.end("Delete failure. Error: " + e)
         }
-
     }
 }
