@@ -1,5 +1,7 @@
 plugins {
     id 'groovy'
+
+    id 'application'
 }
 
 group 'org.example'
@@ -7,6 +9,10 @@ version '1.0-SNAPSHOT'
 
 repositories {
     mavenCentral()
+}
+
+ext{
+    jacksonVersion = '2.8.7'
 }
 
 dependencies {
@@ -23,12 +29,14 @@ dependencies {
 
     //Validator
     implementation 'commons-validator:commons-validator:1.6'
+    implementation 'org.apache.commons:commons-lang3:3.5'
+    implementation 'commons-io:commons-io:2.5'
 
     //Json Converter
-    implementation "com.fasterxml.jackson.core:jackson-core:2.13.0"
-    implementation "com.fasterxml.jackson.core:jackson-databind:2.13.0"
-    implementation "com.fasterxml.jackson.core:jackson-annotations:2.13."
-    implementation "com.fasterxml.jackson.dataformat:jackson-dataformat-yaml:2.13.0"
+    implementation "com.fasterxml.jackson.core:jackson-core:$jacksonVersion"
+    implementation "com.fasterxml.jackson.core:jackson-databind:$jacksonVersion"
+    implementation "com.fasterxml.jackson.core:jackson-annotations:$jacksonVersion"
+    implementation "com.fasterxml.jackson.dataformat:jackson-dataformat-yaml:$jacksonVersion"
 
     // Sl4j
     implementation 'org.slf4j:slf4j-api:1.7.32'
@@ -40,3 +48,5 @@ dependencies {
 test {
     useJUnitPlatform()
 }
+
+mainClassName = 'Main'

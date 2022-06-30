@@ -1,0 +1,9 @@
+http.port: 8080
+
+#work-tools.mongodb.uri: mongodb://admin:admin@localhost:27017/local.startup_log?authSource=admin
+
+activemq.broker.url: tcp://localhost:8161
+activemq.username: admin
+activemq.password: admin
+activemq.queue: TEST
+activemq.consumer-timeout: 1000
