@@ -56,7 +56,7 @@ class DocumentCollection {
         return future
     }
 
-    CompletableFuture<Document> findOndAndDelete(Bson filter) {
+    CompletableFuture<Document> findOneAndDelete(Bson filter) {
         CompletableFuture<Document> future = new MongoCompletableFuture<>()
         COLLECTION.findOneAndDelete(filter, future)
         return future

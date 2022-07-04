@@ -36,7 +36,7 @@ class ModelCollection<T> extends DocumentCollection {
         return findOneAndUpdate(filter,update).thenApply({MAPPER.toModel(it)})
     }
 
-    CompletableFuture<T> findOneAndDeleteModel(Bson filter){
-        return findOneAndDeleteModel(filter).thenApply({MAPPER.toModel(it)})
+    CompletableFuture<T> findOneAndDeleteModel(Bson filter) {
+        return findOneAndDelete(filter).thenApply({ MAPPER.toModel(it) })
     }
 }

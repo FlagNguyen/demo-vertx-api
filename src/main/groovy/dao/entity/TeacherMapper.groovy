@@ -13,7 +13,7 @@ class TeacherMapper extends ModelMapper<Teacher> {
 
         Teacher model = new Teacher(
                 teacherID: document._id,
-                teacherName: document.name,
+                teacherName: document.teacherName,
                 email: document.email
         )
         return model
