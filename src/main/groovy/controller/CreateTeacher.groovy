@@ -2,8 +2,9 @@ package controller
 
 import app.AppConfig
 import com.fasterxml.jackson.databind.ObjectMapper
-import entity.Error
-import entity.Teacher
+import dao.entity.Error
+import dao.entity.Teacher
+import dao.entity.TeacherCollection
 import groovy.transform.InheritConstructors
 import groovy.util.logging.Slf4j
 import io.vertx.core.http.HttpServerRequest
@@ -11,6 +12,7 @@ import io.vertx.core.http.HttpServerResponse
 import io.vertx.ext.web.RoutingContext
 import util.SampleTeacherData
 import util.Validator
+import vertx.JsonRequest
 import vertx.JsonResponse
 import vertx.VertxController
 
@@ -18,8 +20,14 @@ import vertx.VertxController
 @Slf4j
 class CreateTeacher extends VertxController<AppConfig> {
 
+//    TeacherCollection collection = config.teacherCollection
+
     @Override
     void validate(RoutingContext context) {
+//        JsonRequest<Teacher> jsonRequest = parseJson(context, Teacher)
+//        Teacher model = jsonRequest.data
+//        context.put("json", jsonRequest)
+//        context.put("model", model)
     }
 
     @Override
@@ -44,13 +52,18 @@ class CreateTeacher extends VertxController<AppConfig> {
 
             SampleTeacherData.TEACHER_BY_ID.put(newTeacher.teacherID, newTeacher)
             writeJson(response, 200, teacherJsonResponse)
+//            insertNewTeacher(newTeacher)
             log.debug("Add successfully $newTeacher ")
 
         } catch (e) {
+            e.printStackTrace()
             log.error("Error when creating: $e")
             writeJson(response,400, e)
         }
-
     }
+
+//    Teacher insertNewTeacher(Teacher newTeacherModel){
+//        return collection.insertOneModel(newTeacherModel).join()
+//    }
 
 }
