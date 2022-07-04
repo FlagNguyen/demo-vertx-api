@@ -1,4 +1,4 @@
-package service
+package controller
 
 import app.AppConfig
 import com.fasterxml.jackson.databind.ObjectMapper
@@ -9,14 +9,10 @@ import groovy.util.logging.Slf4j
 import io.vertx.core.http.HttpServerRequest
 import io.vertx.core.http.HttpServerResponse
 import io.vertx.ext.web.RoutingContext
-import org.apache.commons.validator.routines.EmailValidator
 import util.SampleTeacherData
 import util.Validator
-import vertx.JsonRequest
 import vertx.JsonResponse
 import vertx.VertxController
-
-import java.util.stream.Collectors
 
 @InheritConstructors
 @Slf4j

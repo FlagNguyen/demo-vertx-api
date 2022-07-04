@@ -1,5 +1,3 @@
-
-
 import app.AppConfig
 import app.RestServer
 import entity.Teacher
@@ -21,16 +19,15 @@ class Main {
 //        Vertx vertx=Vertx.vertx()
 //        vertx.deployVerticle(new TeacherVerticle())
 
-    try {
+        try {
+            createSampleData(SampleTeacherData.TEACHER_BY_ID)
+            AppConfig appConfig = ConfigFactory.getConfig("application.yml", AppConfig)
 
-        createSampleData(SampleTeacherData.TEACHER_BY_ID)
-        AppConfig appConfig = ConfigFactory.getConfig("application.yml", AppConfig)
+            RestServer restServer = new RestServer(appConfig)
 
-        RestServer restServer = new RestServer(appConfig)
-
-        restServer.start()
-    }catch(e){
-        e.printStackTrace()
-    }
+            restServer.start()
+        } catch (e) {
+            e.printStackTrace()
+        }
     }
 }

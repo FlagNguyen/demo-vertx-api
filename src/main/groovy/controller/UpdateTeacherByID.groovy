@@ -1,4 +1,4 @@
-package service
+package controller
 
 import app.AppConfig
 import com.fasterxml.jackson.databind.ObjectMapper
