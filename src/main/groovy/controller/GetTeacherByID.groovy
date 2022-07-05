@@ -1,8 +1,8 @@
 package controller
 
 import app.AppConfig
-import entity.Error
-import entity.Teacher
+import dao.entity.Error
+import dao.entity.Teacher
 import groovy.transform.InheritConstructors
 import io.vertx.core.http.HttpServerRequest
 import io.vertx.core.http.HttpServerResponse
