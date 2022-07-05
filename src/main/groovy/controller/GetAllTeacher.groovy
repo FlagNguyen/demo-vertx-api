@@ -28,6 +28,8 @@ class GetAllTeacher extends VertxController<AppConfig> {
         JsonResponse<List<Teacher>> jsonResponse = new JsonResponse<>(
                 data: SampleTeacherData.TEACHER_BY_ID
         )
+        println collection.allModels.join()
+
         writeJson(response,200,jsonResponse)
     }
 

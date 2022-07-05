@@ -12,12 +12,13 @@ import org.bson.Document
 import org.bson.conversions.Bson
 import org.bson.types.ObjectId
 
-import javax.print.Doc
 import java.util.concurrent.CompletableFuture
 
 class DocumentCollection {
+    //Collection documents from Mongo Database
     final MongoCollection<Document> COLLECTION
 
+    //Constructor: get connect to database by String URI
     DocumentCollection(String uri) {
         Validate.notBlank(uri, "brokeUrl must not be blank")
 
@@ -49,6 +50,12 @@ class DocumentCollection {
         return future
     }
 
+    CompletableFuture<List<Document>> insertMany(List<Document> documents) {
+        CompletableFuture<List<Document>> future = new MongoCompletableFuture<>()
+        COLLECTION.insertMany(documents, { Void avoid, Throwable throwable -> future.onResult(documents, throwable) })
+        return future
+    }
+
     CompletableFuture<Document> findOneAndUpdate(Bson filter, Bson update) {
         CompletableFuture<Document> future = new MongoCompletableFuture<>()
         FindOneAndUpdateOptions options = new FindOneAndUpdateOptions(returnDocument: ReturnDocument.AFTER)
@@ -61,4 +68,5 @@ class DocumentCollection {
         COLLECTION.findOneAndDelete(filter, future)
         return future
     }
+
 }

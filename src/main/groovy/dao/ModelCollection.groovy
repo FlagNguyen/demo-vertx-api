@@ -14,26 +14,31 @@ class ModelCollection<T> extends DocumentCollection {
         this(uri, mapperClass.newInstance())
     }
 
-    ModelCollection(String uri, ModelMapper<T> mapper){
+    ModelCollection(String uri, ModelMapper<T> mapper) {
         super(uri)
         this.MAPPER = mapper
     }
 
-    CompletableFuture<T> getModel(ObjectId id){
+    CompletableFuture<T> getModel(ObjectId id) {
         return findModel(id).first()
     }
 
-    ModelFindIterable<T>findModel(ObjectId id){
+    ModelFindIterable<T> findModel(ObjectId id) {
         return new ModelFindIterable<T>(find(id), MAPPER)
     }
 
-    CompletableFuture<T> insertOneModel(T model){
+    CompletableFuture<T> insertOneModel(T model) {
         Document document = MAPPER.toDocument(model)
-        return insertOne(document).thenApply({MAPPER.toModel(it)})
+        return insertOne(document).thenApply({ MAPPER.toModel(it) })
     }
 
-    CompletableFuture<T> findOneAndUpdateModel(Bson filter, Bson update){
-        return findOneAndUpdate(filter,update).thenApply({MAPPER.toModel(it)})
+    CompletableFuture<List<T>> insertManyModel(List<T> models) {
+        List<Document> documents = MAPPER.toDocuments(models)
+        return insertMany(documents).thenApply({ MAPPER.toModels(it) })
+    }
+
+    CompletableFuture<T> findOneAndUpdateModel(Bson filter, Bson update) {
+        return findOneAndUpdate(filter, update).thenApply({ MAPPER.toModel(it) })
     }
 
     CompletableFuture<T> findOneAndDeleteModel(Bson filter) {
