@@ -2,9 +2,7 @@ package controller
 
 import activemq.QueueSender
 import app.AppConfig
-import com.fasterxml.jackson.databind.ObjectMapper
-import entity.Error
-import entity.Teacher
+import dao.entity.Error
 import groovy.transform.InheritConstructors
 import groovy.util.logging.Slf4j
 import io.vertx.core.http.HttpServerRequest
