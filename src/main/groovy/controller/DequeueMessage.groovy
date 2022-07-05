@@ -27,7 +27,9 @@ class DequeueMessage extends VertxController<AppConfig> {
         try {
             QueueReceiver queueReceiver = new QueueReceiver(config)
             List<Teacher> teachersDequeuedMessages = queueReceiver.dequeue()
-            collection.insertManyModel(teachersDequeuedMessages)
+            if (!teachersDequeuedMessages.empty) {
+                collection.insertManyModel(teachersDequeuedMessages)
+            }
             log.debug("Dequeue and insert new document into database successfully")
             writeJson(response, 200, new JsonResponse(data: teachersDequeuedMessages))
         } catch (e) {
