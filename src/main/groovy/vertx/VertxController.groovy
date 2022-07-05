@@ -12,10 +12,6 @@ import io.vertx.core.http.HttpServerResponse
 import io.vertx.ext.web.RoutingContext
 import org.apache.commons.lang3.Validate
 
-/**
- * Abstract class for controller classes
- * @param <C>
- */
 abstract class VertxController<C extends VertXConfig> implements Handler<RoutingContext> {
     C config
 
@@ -51,12 +47,6 @@ abstract class VertxController<C extends VertXConfig> implements Handler<Routing
         }
     }
 
-    /**
-     * method response json data
-     * @param response
-     * @param statusCode
-     * @param object
-     */
     static void writeJson(HttpServerResponse response, Integer statusCode, Object object) {
         Validate.notNull(object, "Object must not be null")
         response.setStatusCode(statusCode).putHeader("Content-Type", "application/json;charset=UTF-8")

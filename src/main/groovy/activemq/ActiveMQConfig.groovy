@@ -4,10 +4,6 @@ import com.fasterxml.jackson.annotation.JsonProperty
 
 import javax.jms.Session
 
-/**
- * Get configure attributions of active MQ
- * Config in resources/application.yml
- */
 class ActiveMQConfig {
     @JsonProperty("brokerUrl")
     protected String brokerUrl

@@ -7,10 +7,6 @@ import io.vertx.core.http.HttpServerResponse
 import io.vertx.ext.web.RoutingContext
 import vertx.VertxController
 
-/**
- * Check server still alive ?
- * If alive, response OK
- */
 @InheritConstructors
 class HealthLiveness extends VertxController<AppConfig> {
     @Override

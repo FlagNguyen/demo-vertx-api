@@ -1,13 +1,12 @@
 package app
 
 import com.fasterxml.jackson.annotation.JsonProperty
-import dao.entity.TeacherCollection
 import vertx.VertXConfig
 
 class AppConfig extends VertXConfig{
-     //MongoDB
-    @JsonProperty("mongodb.uri")
-    TeacherCollection teacherCollection
+    // MongoDB
+//    @JsonProperty("work-tools.mongodb.uri")
+//    WorkToolCollection workToolCollection
 
     //ActiveMQ
     @JsonProperty("activemq.broker.url")

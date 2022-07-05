@@ -2,8 +2,8 @@ package controller
 
 import app.AppConfig
 import com.fasterxml.jackson.databind.ObjectMapper
-import dao.entity.Error
-import dao.entity.Teacher
+import entity.Error
+import entity.Teacher
 import groovy.transform.InheritConstructors
 import groovy.util.logging.Slf4j
 import io.vertx.core.http.HttpServerRequest

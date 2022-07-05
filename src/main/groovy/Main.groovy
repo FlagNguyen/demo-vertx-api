@@ -1,6 +1,6 @@
 import app.AppConfig
 import app.RestServer
-import dao.entity.Teacher
+import entity.Teacher
 import groovy.util.logging.Slf4j
 import util.ConfigFactory
 import util.SampleTeacherData
@@ -16,10 +16,11 @@ class Main {
     }
 
     static void main(String[] args) {
+//        Vertx vertx=Vertx.vertx()
+//        vertx.deployVerticle(new TeacherVerticle())
+
         try {
             createSampleData(SampleTeacherData.TEACHER_BY_ID)
-
-            //Get configurations in file application.yml and convert into AppConfig Object
             AppConfig appConfig = ConfigFactory.getConfig("application.yml", AppConfig)
 
             RestServer restServer = new RestServer(appConfig)

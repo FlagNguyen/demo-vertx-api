@@ -18,12 +18,7 @@ class QueueSender {
     private ActiveMQQueue queue
     private ActiveMQConfig config
 
-    /**
-     * Constructor create connection, session, queue, producer as necessary by configuration
-     * Start connection after create
-     * @param appConfig
-     */
-    QueueSender(AppConfig appConfig) {
+    QueueSender(AppConfig appConfig){
         ActiveMQConfig activeMQConfig = new ActiveMQConfig(
                 brokerUrl: appConfig.amqBrokerUrl,
                 username: appConfig.amqUserName,
@@ -46,23 +41,16 @@ class QueueSender {
 
         connection.start()
     }
-    /**
-     * Send Json Object Message into queue then close
-     * @param inputJsonObject
-     * @throws JMSException
-     */
-    void enqueue(String inputJsonObject) throws JMSException {
+
+    void enqueue(String inputJsonObject) throws JMSException{
         TextMessage textMessage = session.createTextMessage(inputJsonObject)
         messageProducer.send(textMessage)
-        if (session.transacted) {
+        if(session.transacted){
             session.commit()
         }
         close()
     }
 
-    /**
-     * close all connection, session, producer
-     */
     void close() {
         messageProducer.close()
         session.close()

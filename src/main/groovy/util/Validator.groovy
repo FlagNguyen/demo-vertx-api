@@ -1,6 +1,6 @@
 package util
 
-import dao.entity.Teacher
+import entity.Teacher
 import org.apache.commons.validator.routines.EmailValidator
 
 import java.util.stream.Collectors

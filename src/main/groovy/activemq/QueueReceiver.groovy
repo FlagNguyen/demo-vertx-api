@@ -1,8 +1,6 @@
 package activemq
 
 import app.AppConfig
-import com.fasterxml.jackson.databind.ObjectMapper
-import dao.entity.Teacher
 import org.apache.activemq.ActiveMQConnection
 import org.apache.activemq.ActiveMQConnectionFactory
 import org.apache.activemq.ActiveMQSession
@@ -20,11 +18,6 @@ class QueueReceiver {
     private ActiveMQQueue queue
     private ActiveMQConfig config
 
-    /**
-     * Constructor create connection, session, queue, producer as necessary by configuration
-     * Start connection after create
-     * @param config
-     */
     QueueReceiver(AppConfig config) {
         ActiveMQConfig activeMQConfig = new ActiveMQConfig(
                 brokerUrl: config.amqBrokerUrl,
@@ -47,34 +40,24 @@ class QueueReceiver {
         connection.start()
     }
 
-    /**
-     * Dequeue all messages in queue
-     * @return List of teachers which was be dequeued
-     */
-    List<Teacher> dequeue() {
-        List<Teacher> receiveMessages = new ArrayList()
+    List<String> dequeue() {
+        List<String> messages = new ArrayList()
         while (true) {
             Message message = messageConsumer.receive(config.consumerTimeOut)
             if (message == null) {
                 break
             }
             if (message instanceof TextMessage) {
-
-                //Convert received Json message to Teacher object then add into output list
-                Teacher teacher = ObjectMapper.newInstance().readValue(message.getText(), Teacher.class)
-                receiveMessages.add(teacher)
+                messages.add(message.getText())
             }
             if (session.transacted) {
                 session.commit()
             }
         }
         close()
-        return receiveMessages
+        return messages
     }
 
-    /**
-     * close all connection, session, producer
-     */
     void close() {
         messageConsumer.close()
         session.close()

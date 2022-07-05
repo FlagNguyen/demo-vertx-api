@@ -5,9 +5,6 @@ import io.vertx.core.http.HttpServer
 import io.vertx.ext.web.Router
 
 @Slf4j
-/**
- * Create Router, HttpServer,
- */
 abstract class VertXServer<C extends VertXConfig> {
     C config
 
@@ -37,9 +34,7 @@ abstract class VertXServer<C extends VertXConfig> {
                         }
                 })
     }
-    /**
-     * close server and vertX
-     */
+
     void close() {
         httpServer.close()
         config.vertx.close()

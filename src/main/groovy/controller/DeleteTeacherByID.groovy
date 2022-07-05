@@ -1,7 +1,7 @@
 package controller
 
 import app.AppConfig
-import dao.entity.Error
+import entity.Error
 import groovy.transform.InheritConstructors
 import groovy.util.logging.Slf4j
 import io.vertx.core.http.HttpServerRequest
