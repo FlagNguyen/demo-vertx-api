@@ -13,6 +13,9 @@ import controller.UpdateTeacherByID
 import controller.health.HealthLiveness
 import vertx.VertXServer
 
+/**
+ * Create Vertx Server
+ */
 class RestServer extends VertXServer<AppConfig>{
 
 
@@ -20,6 +23,9 @@ class RestServer extends VertXServer<AppConfig>{
         super(config)
     }
 
+    /**
+     * Set up routes for CRUD api
+     */
     @Override
     void setUpRouter() {
         router.route("/api/teacher*").handler(BodyHandler.create())

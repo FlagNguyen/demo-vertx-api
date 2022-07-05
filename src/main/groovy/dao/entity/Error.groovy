@@ -1,4 +1,4 @@
-package entity
+package dao.entity
 
 class Error {
     private String errorCode

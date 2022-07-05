@@ -1,6 +1,6 @@
 package util
 
-import entity.Teacher
+import dao.entity.Teacher
 
 class SampleTeacherData {
 

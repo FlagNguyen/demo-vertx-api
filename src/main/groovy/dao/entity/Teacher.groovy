@@ -1,4 +1,4 @@
-package entity
+package dao.entity
 
 class Teacher {
     private String teacherID
@@ -40,7 +40,7 @@ class Teacher {
 
 
     @Override
-    public String toString() {
+    String toString() {
         return "Teacher{" +
                 "teacherID='" + teacherID + '\'' +
                 ", teacherName='" + teacherName + '\'' +
