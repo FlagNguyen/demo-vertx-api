@@ -26,9 +26,6 @@ class TeacherMapper extends ModelMapper<Teacher> {
         }
 
         Document document = new Document()
-        if(model.teacherID){
-            document.put("_id", model.teacherID)
-        }
 
         document.putAll([
                 teacherName: model.teacherName,

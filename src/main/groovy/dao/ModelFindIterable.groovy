@@ -8,6 +8,7 @@ import java.util.concurrent.CompletableFuture
 
 class ModelFindIterable<T> {
     private FindIterable<Document> ITERABLE
+
     private final ModelMapper<T> MAPPER
 
     ModelFindIterable(DocumentFindIterable findIterable, ModelMapper<T> mapper) {
@@ -20,12 +21,23 @@ class ModelFindIterable<T> {
     }
 
     CompletableFuture<T> first() {
-        return this.firstDocument().thenApply({ document -> MAPPER.toModel(document) })
+        return this.firstDocument().thenApply({ document -> MAPPER.toModel(document)
+        })
     }
 
     CompletableFuture<Document> firstDocument() {
         CompletableFuture<Document> future = new MongoCompletableFuture<>()
         ITERABLE.first(future)
         return future
+    }
+
+    CompletableFuture<List<Document>> into() {
+        MongoCompletableFuture<List<Document>> future = new MongoCompletableFuture<>()
+        ITERABLE.into(new ArrayList<>(), future)
+        return future
+    }
+
+    CompletableFuture<List<T>> intoModels() {
+        return this.into().thenApply { documents -> MAPPER.toModels(documents) }
     }
 }

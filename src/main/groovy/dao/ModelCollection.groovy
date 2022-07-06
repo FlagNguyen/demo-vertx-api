@@ -1,5 +1,6 @@
 package dao
 
+import com.mongodb.async.client.FindIterable
 import org.bson.Document
 import org.bson.conversions.Bson
 import org.bson.types.ObjectId
@@ -17,6 +18,10 @@ class ModelCollection<T> extends DocumentCollection {
     ModelCollection(String uri, ModelMapper<T> mapper) {
         super(uri)
         this.MAPPER = mapper
+    }
+
+    ModelFindIterable<T> findModels(){
+        return new ModelFindIterable<T>(COLLECTION.find() as FindIterable<Document>, MAPPER)
     }
 
     CompletableFuture<T> getModel(ObjectId id) {

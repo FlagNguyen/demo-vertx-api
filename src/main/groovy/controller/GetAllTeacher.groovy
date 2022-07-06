@@ -1,15 +1,11 @@
 package controller
 
-
 import app.AppConfig
-import dao.entity.Teacher
 import dao.entity.TeacherCollection
 import groovy.transform.InheritConstructors
 import io.vertx.core.http.HttpServerRequest
 import io.vertx.core.http.HttpServerResponse
 import io.vertx.ext.web.RoutingContext
-import org.bson.conversions.Bson
-import util.SampleTeacherData
 import vertx.JsonResponse
 import vertx.VertxController
 
@@ -19,19 +15,20 @@ class GetAllTeacher extends VertxController<AppConfig> {
 
     @Override
     void validate(RoutingContext context) {
-
     }
 
     @Override
     void handle(RoutingContext context, HttpServerRequest request, HttpServerResponse response) {
-
-        JsonResponse<List<Teacher>> jsonResponse = new JsonResponse<>(
-                data: SampleTeacherData.TEACHER_BY_ID
-        )
-        println collection.allModels.join()
-
-        writeJson(response,200,jsonResponse)
+        writeJson(response, 200, new JsonResponse<>(
+                data: getAllTeacher()
+        ))
     }
 
+    /**
+     * @return List of all teacher object in database
+     */
+    List getAllTeacher() {
+        return collection.findModels().intoModels().join()
+    }
 
 }

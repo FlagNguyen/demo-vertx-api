@@ -12,6 +12,9 @@ import io.vertx.ext.web.RoutingContext
 import vertx.JsonResponse
 import vertx.VertxController
 
+/**
+ * Dequeue then insert result into database
+ */
 @InheritConstructors
 @Slf4j
 class DequeueMessage extends VertxController<AppConfig> {
@@ -27,7 +30,7 @@ class DequeueMessage extends VertxController<AppConfig> {
         try {
             QueueReceiver queueReceiver = new QueueReceiver(config)
             List<Teacher> teachersDequeuedMessages = queueReceiver.dequeue()
-            if (!teachersDequeuedMessages.empty) {
+            if (!teachersDequeuedMessages.isEmpty()) {
                 collection.insertManyModel(teachersDequeuedMessages)
             }
             log.debug("Dequeue and insert new document into database successfully")

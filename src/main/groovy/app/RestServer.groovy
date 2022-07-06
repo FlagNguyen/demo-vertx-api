@@ -35,7 +35,7 @@ class RestServer extends VertXServer<AppConfig>{
         router.get("/api/teachers").handler(new GetAllTeacher(config))
         router.get("/api/teachers/:id").handler(new GetTeacherByID(config))
         router.post("/api/teachers").handler(new CreateTeacher(config))
-        router.put("/api/teachers").handler(new UpdateTeacherByID(config))
+        router.put("/api/teachers/:id").handler(new UpdateTeacherByID(config))
         router.delete("/api/teachers/:id").handler(new DeleteTeacherByID(config))
         router.post("/api/teachers/enqueue").handler(new EnqueueMessage(config))
         router.post("/api/teachers/dequeue").handler(new DequeueMessage(config))

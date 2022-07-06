@@ -1,9 +1,9 @@
 package util
 
 import dao.entity.Teacher
+import dao.entity.TeacherCollection
+import org.apache.commons.lang3.Validate
 import org.apache.commons.validator.routines.EmailValidator
-
-import java.util.stream.Collectors
 
 class Validator {
 
@@ -16,17 +16,11 @@ class Validator {
     static List validateTeacherRequestAndReturnMessage(Teacher inputTeacherModel) {
         List outputErrorMessages = new ArrayList()
 
-        //Get teacher ID list for checking duplicate
-        List<String> teacherIDList = SampleTeacherData.TEACHER_BY_ID.values()
-                .stream()
-                .map({ teacher -> teacher.teacherID })
-                .collect(Collectors.toList())
-
-        if (teacherIDList.contains(inputTeacherModel.getTeacherID())) {
-            outputErrorMessages.add("DuplicateID")
+        if (!Validate.notBlank(inputTeacherModel.teacherName)
+                || !Validate.notBlank(inputTeacherModel.email)) {
+            outputErrorMessages.add("LackField")
         }
-
-        if (!EmailValidator.getInstance().isValid(inputTeacherModel.getEmail())) {
+        if (!EmailValidator.getInstance().isValid(inputTeacherModel.email)) {
             outputErrorMessages.add("WrongFormatEmail")
         }
 

@@ -28,7 +28,7 @@ class EnqueueMessage extends VertxController<AppConfig> {
             queueSender.enqueue(jsonMessage)
 
             writeJson(response, 200, jsonMessage)
-            log.info("Enqueue successfully "+jsonMessage)
+            log.info("Enqueue successfully " + jsonMessage)
         } catch (e) {
             log.error("Error when enqueue: $e")
             writeJson(response, 500, new JsonResponse<Error>(
