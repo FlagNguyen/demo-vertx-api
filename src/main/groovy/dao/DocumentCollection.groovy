@@ -1,7 +1,6 @@
 package dao
 
 import com.mongodb.ConnectionString
-import com.mongodb.async.client.FindIterable
 import com.mongodb.async.client.MongoClient
 import com.mongodb.async.client.MongoClients
 import com.mongodb.async.client.MongoCollection
@@ -32,7 +31,7 @@ class DocumentCollection {
         this.COLLECTION = mongoDatabase.getCollection(connectionString.collection)
     }
 
-    CompletableFuture<List<Document>> findDocuments(){
+    CompletableFuture<List<Document>> findDocuments() {
         return find([] as Document).intoDocuments()
     }
 

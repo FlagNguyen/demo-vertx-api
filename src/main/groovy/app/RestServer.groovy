@@ -1,22 +1,16 @@
 package app
 
-import controller.DequeueMessage
+import controller.*
+import controller.health.HealthLiveness
 import exception.InternalServerError
 import exception.NotFound
 import io.vertx.ext.web.handler.BodyHandler
-import controller.CreateTeacher
-import controller.DeleteTeacherByID
-import controller.EnqueueMessage
-import controller.GetAllTeacher
-import controller.GetTeacherByID
-import controller.UpdateTeacherByID
-import controller.health.HealthLiveness
 import vertx.VertXServer
 
 /**
  * Create Vertx Server
  */
-class RestServer extends VertXServer<AppConfig>{
+class RestServer extends VertXServer<AppConfig> {
 
 
     RestServer(AppConfig config) {

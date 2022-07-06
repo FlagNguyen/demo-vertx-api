@@ -1,13 +1,13 @@
 package dao.entity
 
-import util.ModelMapper
 import org.bson.Document
+import util.ModelMapper
 
 class TeacherMapper extends ModelMapper<Teacher> {
 
     @Override
-    Teacher toModel(Document document){
-        if (document == null){
+    Teacher toModel(Document document) {
+        if (document == null) {
             return null
         }
 
@@ -20,8 +20,8 @@ class TeacherMapper extends ModelMapper<Teacher> {
     }
 
     @Override
-    Document toDocument(Teacher model){
-        if(model == null){
+    Document toDocument(Teacher model) {
+        if (model == null) {
             return null
         }
 
@@ -29,7 +29,7 @@ class TeacherMapper extends ModelMapper<Teacher> {
 
         document.putAll([
                 teacherName: model.teacherName,
-                email: model.email
+                email      : model.email
         ])
         return document
     }

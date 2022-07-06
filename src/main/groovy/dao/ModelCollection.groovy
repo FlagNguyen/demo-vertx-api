@@ -20,7 +20,7 @@ class ModelCollection<T> extends DocumentCollection {
         this.MAPPER = mapper
     }
 
-    ModelFindIterable<T> findModels(){
+    ModelFindIterable<T> findModels() {
         return new ModelFindIterable<T>(COLLECTION.find() as FindIterable<Document>, MAPPER)
     }
 

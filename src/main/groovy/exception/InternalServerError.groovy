@@ -19,8 +19,8 @@ class InternalServerError extends VertxController<AppConfig> {
         boolean debug = request.getParam("debug")?.equalsIgnoreCase("true")
         Map resultMap = [
                 status: 500,
-                error: [
-                        message: context.failure().message,
+                error : [
+                        message           : context.failure().message,
                         root_cause_message: debug ? ExceptionUtils.getRootCauseMessage(context.failure()) : null,
                         detail            : debug ? ExceptionUtils.getStackTrace(context.failure()) : null
                 ]

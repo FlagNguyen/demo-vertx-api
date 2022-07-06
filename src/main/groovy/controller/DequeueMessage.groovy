@@ -33,7 +33,7 @@ class DequeueMessage extends VertxController<AppConfig> {
             if (!teachersDequeuedMessages.isEmpty()) {
                 collection.insertManyModel(teachersDequeuedMessages)
             }
-            log.debug("Dequeue and insert new document into database successfully")
+            log.info("Dequeue and insert new document into database successfully")
             writeJson(response, 200, new JsonResponse(data: teachersDequeuedMessages))
         } catch (e) {
             log.error("Error when dequeue: $e")

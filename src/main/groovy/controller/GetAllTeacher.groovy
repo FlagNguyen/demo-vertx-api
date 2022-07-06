@@ -20,15 +20,7 @@ class GetAllTeacher extends VertxController<AppConfig> {
     @Override
     void handle(RoutingContext context, HttpServerRequest request, HttpServerResponse response) {
         writeJson(response, 200, new JsonResponse<>(
-                data: getAllTeacher()
+                data: collection.findModels().intoModels().join()
         ))
     }
-
-    /**
-     * @return List of all teacher object in database
-     */
-    List getAllTeacher() {
-        return collection.findModels().intoModels().join()
-    }
-
 }

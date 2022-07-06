@@ -4,6 +4,10 @@ import org.bson.Document
 
 import java.util.stream.Collectors
 
+/**
+ * Abstract class for T object provide methods: convert between Model and Document
+ * @param <T>
+ */
 abstract class ModelMapper<T> {
     abstract T toModel(Document document)
 

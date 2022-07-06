@@ -20,13 +20,13 @@ class DocumentFindIterable {
         return future
     }
 
-    CompletableFuture<List<Document>> intoDocuments(){
+    CompletableFuture<List<Document>> intoDocuments() {
         MongoCompletableFuture<List<Document>> future = new MongoCompletableFuture<>()
-        ITERABLE.into(new ArrayList<Document>(),future)
+        ITERABLE.into(new ArrayList<Document>(), future)
         return future
     }
 
-    DocumentFindIterable projection(Bson projection){
+    DocumentFindIterable projection(Bson projection) {
         ITERABLE.projection(projection)
         return this
     }

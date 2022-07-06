@@ -38,6 +38,7 @@ class UpdateTeacherByID extends VertxController<AppConfig> {
             writeJson(response, 404, new JsonResponse<Error>(
                     data: new Error("404", "Can't found this id")
             ))
+            log.error("Can't found this id")
             return
         }
 
@@ -51,7 +52,7 @@ class UpdateTeacherByID extends VertxController<AppConfig> {
         }
         if (errorMessages.contains("LackField")) {
             writeJson(response, 400, new Error("400", "Lack of required fields"))
-            log.debug("Lack of required fields")
+            log.error("Lack of required fields")
             return
         }
 
@@ -65,7 +66,7 @@ class UpdateTeacherByID extends VertxController<AppConfig> {
 
         //Response updated teacher and logging
         writeJson(response, 200, new JsonResponse<Teacher>(data: updatedTeacher))
-        log.debug("Update successfully teacher's id: $updateTeacherRequest.teacherID")
+        log.info("Update successfully teacher's id: $updateTeacherRequest.teacherID")
     }
 
     /**

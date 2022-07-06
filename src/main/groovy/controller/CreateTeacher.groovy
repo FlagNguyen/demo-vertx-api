@@ -36,12 +36,12 @@ class CreateTeacher extends VertxController<AppConfig> {
             List errorMessage = Validator.validateTeacherRequestAndReturnMessage(newTeacher)
             if (errorMessage.contains("LackField")) {
                 writeJson(response, 400, new Error("400", "Lack of required fields"))
-                log.debug("Lack of required fields")
+                log.info("Lack of required fields")
                 return
             }
             if (errorMessage.contains("WrongFormatEmail")) {
                 writeJson(response, 400, new Error("400", "Wrong email format"))
-                log.debug("Wrong email format")
+                log.info("Wrong email format")
                 return
             }
 
@@ -50,7 +50,7 @@ class CreateTeacher extends VertxController<AppConfig> {
 
             //Response added teacher and logging
             writeJson(response, 200, new JsonResponse<>(data: addedTeacher))
-            log.debug("Add successfully $newTeacher ")
+            log.info("Add successfully $newTeacher ")
 
         } catch (e) {
             log.error("Error when creating: $e")

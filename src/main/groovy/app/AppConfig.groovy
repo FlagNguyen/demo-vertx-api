@@ -4,8 +4,8 @@ import com.fasterxml.jackson.annotation.JsonProperty
 import dao.entity.TeacherCollection
 import vertx.VertXConfig
 
-class AppConfig extends VertXConfig{
-     //MongoDB
+class AppConfig extends VertXConfig {
+    //MongoDB
     @JsonProperty("mongodb.uri")
     TeacherCollection teacherCollection
 
