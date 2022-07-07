@@ -1,8 +1,12 @@
 package util
 
+
 import dao.entity.Teacher
+import dao.entity.TeacherCollection
+import org.apache.commons.lang3.StringUtils
 import org.apache.commons.lang3.Validate
 import org.apache.commons.validator.routines.EmailValidator
+import org.bson.types.ObjectId
 
 class Validator {
 
@@ -12,18 +16,32 @@ class Validator {
      * @param inputTeacherModel
      * @return List error key messages
      */
-    static List validateTeacherRequestAndReturnMessage(Teacher inputTeacherModel) {
-        List outputErrorMessages = new ArrayList()
+    static void validateTeacherRequestAndReturnMessage(Teacher inputTeacherModel) {
 
-        if (!Validate.notBlank(inputTeacherModel.teacherName)
-                || !Validate.notBlank(inputTeacherModel.email)) {
-            outputErrorMessages.add("LackField")
-        }
-        if (!EmailValidator.getInstance().isValid(inputTeacherModel.email)) {
-            outputErrorMessages.add("WrongFormatEmail")
-        }
+        //Lack of fields
+        Validate.isTrue(StringUtils.isNotBlank(inputTeacherModel.teacherName) &&
+                StringUtils.isNotBlank(inputTeacherModel.email), "Lack of required fields")
 
-        return outputErrorMessages
+        //Validate email format
+        Validate.isTrue(EmailValidator.getInstance().isValid(inputTeacherModel.email), "Wrong email format")
+
+
+    }
+
+    /**
+     *
+     * @param teacherIdParam
+     * @return true if this teacher existed and false if it not
+     */
+    static boolean checkExistedTeacher(ObjectId teacherIdParam, TeacherCollection collection) {
+        //Get teacher object in database which has input id parameter
+        Teacher foundTeacher = collection.getModel(teacherIdParam).join()
+
+        //Check this teacher is existed or not
+        if (foundTeacher == null) {
+            return false
+        }
+        return true
     }
 
 }

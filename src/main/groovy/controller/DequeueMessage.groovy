@@ -9,7 +9,6 @@ import groovy.util.logging.Slf4j
 import io.vertx.core.http.HttpServerRequest
 import io.vertx.core.http.HttpServerResponse
 import io.vertx.ext.web.RoutingContext
-import vertx.JsonResponse
 import vertx.VertxController
 
 /**
@@ -22,7 +21,6 @@ class DequeueMessage extends VertxController<AppConfig> {
 
     @Override
     void validate(RoutingContext context) {
-
     }
 
     @Override
@@ -34,7 +32,7 @@ class DequeueMessage extends VertxController<AppConfig> {
                 collection.insertManyModel(teachersDequeuedMessages)
             }
             log.info("Dequeue and insert new document into database successfully")
-            writeJson(response, 200, new JsonResponse(data: teachersDequeuedMessages))
+            writeJson(response, 200, [data: teachersDequeuedMessages])
         } catch (e) {
             log.error("Error when dequeue: $e")
         }

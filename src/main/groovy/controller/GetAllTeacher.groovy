@@ -6,7 +6,6 @@ import groovy.transform.InheritConstructors
 import io.vertx.core.http.HttpServerRequest
 import io.vertx.core.http.HttpServerResponse
 import io.vertx.ext.web.RoutingContext
-import vertx.JsonResponse
 import vertx.VertxController
 
 @InheritConstructors
@@ -19,8 +18,6 @@ class GetAllTeacher extends VertxController<AppConfig> {
 
     @Override
     void handle(RoutingContext context, HttpServerRequest request, HttpServerResponse response) {
-        writeJson(response, 200, new JsonResponse<>(
-                data: collection.findModels().intoModels().join()
-        ))
+        writeJson(response, 200, [data: collection.findModels().intoModels().join()])
     }
 }

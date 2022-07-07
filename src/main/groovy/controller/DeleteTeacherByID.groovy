@@ -1,16 +1,17 @@
 package controller
 
 import app.AppConfig
-import dao.entity.Error
+import dao.entity.Teacher
 import dao.entity.TeacherCollection
 import groovy.transform.InheritConstructors
 import groovy.util.logging.Slf4j
 import io.vertx.core.http.HttpServerRequest
 import io.vertx.core.http.HttpServerResponse
 import io.vertx.ext.web.RoutingContext
+import org.apache.commons.lang3.Validate
 import org.bson.Document
 import org.bson.types.ObjectId
-import vertx.JsonResponse
+import util.Validator
 import vertx.VertxController
 
 @InheritConstructors
@@ -20,28 +21,20 @@ class DeleteTeacherByID extends VertxController<AppConfig> {
 
     @Override
     void validate(RoutingContext context) {
-
+        String id = context.request().getParam("id")
+        Validate.isTrue(ObjectId.isValid(id), "id not valid")
+        Validate.isTrue(Validator.checkExistedTeacher(new ObjectId(id), collection), "Can't found this id")
+        context.put("id", new ObjectId(id))
     }
 
     @Override
     void handle(RoutingContext context, HttpServerRequest request, HttpServerResponse response) {
         try {
             //Get teacher id param
-            ObjectId teacherIdParam = new ObjectId(request.getParam("id"))
-
-            //Validate if this id is existed
-            if (collection.getModel(teacherIdParam) == null) {
-                writeJson(response, 404,
-                        new JsonResponse<Error>(data: new Error("404", "Can't found this id")))
-                log.error("Can't found this id")
-                return
-            }
-
-            //Create filter
-            Document filter = new Document("_id", teacherIdParam)
+            ObjectId teacherIdParam = context.get("id")
 
             //Delete in database
-            collection.findOneAndDeleteModel(filter).join()
+            Teacher deletedTeacher = deleteTeacher(teacherIdParam)
 
             //Response successfully
             writeJson(response, 200, "Delete teacher's id $teacherIdParam successfully")
@@ -50,6 +43,10 @@ class DeleteTeacherByID extends VertxController<AppConfig> {
         } catch (e) {
             log.error("Error when deleting: $e")
         }
+    }
+
+    Teacher deleteTeacher(ObjectId deleteTeacherId) {
+        return collection.findOneAndDeleteModel(["_id", deleteTeacherId] as Document).join()
     }
 
 }
